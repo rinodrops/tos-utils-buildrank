@@ -1,4 +1,4 @@
-# coding: UTF-8
+#!/usr/bin/env python
 
 # iToS Class Build Ranking
 
@@ -6,19 +6,19 @@
 # brew cask install chromedriver
 
 from bs4 import BeautifulSoup
-from collections import OrderedDict
 import re
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import time
 
+
 def get():
     # run as headless mode
     options = Options()
-    options.set_headless(True)
+    options.headless = True
 
     # initiate browser
-    driver = webdriver.Chrome(chrome_options=options)
+    driver = webdriver.Chrome(options=options)
 
     # obtain html, wait until ajax stuff finishes
     driver.get("https://treeofsavior.com/page/class/ranking.php")
@@ -50,15 +50,18 @@ def get():
         class_tree = rank.select_one('li.rank_first + li').text
 
         # class build
-        class_build = OrderedDict()
+        class_build = list()
         build = rank.select_one('ul.classbuild')
         for li in build.select('li'):
             class_name = li.select_one('p.class_name').text
-            class_circle = 0
-            for class_star in li.select_one('p.circle_star').select('img'):
-                if 'star_on' in class_star['src']: class_circle += 1 
-            class_build[class_name] = class_circle
+            class_build.append(class_name)
 
         ranking.append([rank_number.text, rank_updown, rank_updown_number, class_tree, class_build])
 
     return (classbuild_date, title, ranking)
+
+if __name__ == '__main__':
+    (classbuild_date, title, ranking) = get()
+    print(classbuild_date)
+    print(title)
+    print(ranking)
