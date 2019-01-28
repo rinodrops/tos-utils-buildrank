@@ -1,0 +1,1 @@
+from buildrank.main import *
