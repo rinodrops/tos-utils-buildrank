@@ -16,4 +16,7 @@ if __name__ == '__main__':
 
     # dump to the file
     with open('build-ranking_' + date + '.json', 'w') as f:
+        f.write('[')
+        f.write('["' + date + '"],\n')
         json.dump(ranking, f, indent=4, separators=(',', ': '))
+        f.write('\n]')
