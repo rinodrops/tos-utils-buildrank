@@ -1,0 +1,15 @@
+# os specific
+.DS_Store
+
+# compiled materials
+__pycache__/
+*.py[cod]
+*$py.class
+
+# distribution
+build/
+dist/
+
+# environments
+.venv
+venv/
